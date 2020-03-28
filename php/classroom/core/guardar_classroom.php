@@ -30,7 +30,7 @@
 				if((isset($_FILES['imagen']['name']) && ($_FILES['imagen']['error'] == UPLOAD_ERR_OK))) {
 					$destino_de_ruta = "./media/classroom";
 					move_uploaded_file($_FILES['imagen']['tmp_name'],$destino_de_ruta . $_FILES['imagen']['name']);
-					chmod($destino_de_ruta, 0666);
+					chmod($destino_de_ruta, 0755);
 		}else{
 			echo "el archivo nose a podido copiar a la carpeta imagenes";
 		}

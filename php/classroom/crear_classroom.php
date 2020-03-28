@@ -25,14 +25,14 @@
 			<header class="cuadro_titulo bg-danger">
                 <h4 class="title text-center text-light">Aula virtual | Crear Aula virtual</h4>
             </header>
-			<form class="form-horizontal" method="POST" action="core/guardar.php" autocomplete="off">
+			<form class="form-horizontal" method="POST" action="core/guardar.php" enctype="multipart/form-data" autocomplete="off">
 				<div class="modal-body">
 					
 					<div class="form-group">
 						<label for="imagen">Seleccione una portada para el aula virtual</label>
 						<div class="col-sm-10">
 						<input type="hidden" name="MAX_TAM" value="2097152">
-							<input type="file" class="custom-file-input" id="imagen" name="imagen">
+							<input type="file" class="custom-file-input" accept=".jpg, .jpeg, .png" id="imagen" name="imagen">
 						</div>
 					</div>
 					<div class="form-group">

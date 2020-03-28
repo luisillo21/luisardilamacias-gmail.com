@@ -143,7 +143,7 @@
 					        <div class="form-group">
 					        	<label for="imagen">Seleccione una imagen de fondo</label>
                         <input type="hidden" name="MAX_TAM" value="2097152">
-                        <input type="file" class="form-control" name="imagen" id="imagen"  required>
+                        <input type="file" class="form-control" name="imagen" id="imagen"  accept="image/x-png,image/jpeg"   required>
 					        </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Nombre</label>
