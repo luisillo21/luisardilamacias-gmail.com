@@ -1,0 +1,26 @@
+:root{
+	--color_fondo_cab: blue;
+	--color_texto_cab: white;
+
+    --color_fondo_grid: blue;
+    --color_texto_grid: white;
+
+	--color_background_body: white;
+}
+
+header{
+    background-color: var(--color_fondo_cab);
+    color: var(--color_texto_cab);
+    text-align: center;
+}
+body{
+	background-color: var(--color_background_body);
+}
+/*estilos para la tabla*/
+table th {
+    background-color: var(--color_fondo_grid) ;
+    color: var(--color_texto_grid)	;
+}
+table>tbody>tr>td {
+    vertical-align: middle ;
+}

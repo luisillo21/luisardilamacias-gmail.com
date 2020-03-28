@@ -1,0 +1,250 @@
+.color_t{
+    background-color: #0d8bad;
+}
+
+.color_t2{
+    background-color: #20bee9;
+}
+
+.cuadro_titulo{
+    height: 50px;
+    margin: -10px;
+    background-color:#4e73df;
+    color: white;
+    padding: 14px;
+}
+
+.titulo{
+    font-family: "Trebuchet MS", Geneva, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: large;
+
+}
+
+.formulario{
+    font-family: "Trebuchet MS", Geneva, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: small;
+}
+
+.contenido{
+ padding-left: 30px;
+ padding-top: 30px;
+
+}
+
+.div_cont{
+    width: auto;
+    height: auto;
+
+
+}
+iframe{
+    overflow: hidden;
+}
+
+.texto{
+    margin-left: 10px;
+    text-align: left;
+    width: 150px;
+}
+
+.cajatexto{
+
+   background-color: white;
+   border-radius: 10px;
+   border-style: solid;
+   border-color:#CACACA ;
+   padding-left: 10px;
+   height: 30px;
+   width: 250px;
+   margin-left:30px;
+   margin-top:10px;
+   font-size: 14px;
+   font-family: "Trebuchet MS", Geneva, Arial, Helvetica, sans-serif;
+}
+
+.botones{
+   margin-left: 90px;
+}
+
+#submenu_configuracion{
+padding-left: 10px;
+background-color: #4e73df;
+}
+
+
+#submenu_configuracion  a:hover{
+padding-left: 20px;
+color: white;
+background-color: #5591E2;
+
+}
+
+.lista_empresa_layout{
+float:right;
+margin-top: -355px;
+margin-right: 70px;
+}
+
+.eliminar_empresa{
+padding: 5px;
+border-top-color: #858796;
+border-left-color: white;
+border-right-color: white;
+border-bottom-color: white;
+ border-style: solid;
+border-top-left-radius: 5px;
+margin-top: 5px;
+margin-left: 0px;
+margin-bottom: -20px;
+}
+
+.paginacion_derecha{
+float:right;
+margin-top: 0px;
+margin-right: 500px;
+}
+
+.formulario_lado_derecho{
+    float:right;
+    margin-top: -210px;
+    margin-right: 120px;
+    font-size: 14px;
+}
+
+.tabla_lista_cab{
+    background-color: #4e73df;
+    color: white;
+    font-family: "Trebuchet MS", Geneva, Arial, Helvetica, sans-serif;
+    width: 200px;
+    text-align: center;
+}
+
+.tabla_lista_cont{
+    height: 40px;
+    font-size: 12px;
+    padding: 10px;
+}
+
+.tabla_lista_cont label{
+    padding-left: 10px;
+}
+
+input[type=checkbox] {
+         position: relative;
+	       cursor: pointer;
+    }
+    input[type=checkbox]:before {
+         content: "";
+         display: block;
+         position: absolute;
+         width: 16px;
+         height: 16px;
+         top: 0;
+         left: 0;
+         border: 2px solid #555555;
+         border-radius: 3px;
+         background-color: white;
+}
+    input[type=checkbox]:checked:after {
+         content: "";
+         display: block;
+         width: 5px;
+         height: 10px;
+         border: solid black;
+         border-width: 0 2px 2px 0;
+         -webkit-transform: rotate(45deg);
+         -ms-transform: rotate(45deg);
+         transform: rotate(45deg);
+         position: absolute;
+         top: 2px;
+         left: 6px;
+}
+
+.cuadro_titulo_pag_inicio{
+    height: 100px;
+    margin: -10px;
+    background-color:#4e73df;
+    color: white;
+    padding: 14px;
+}
+
+.titulo_inicio{
+    padding-top: 0px;
+}
+
+.slide_cont{
+        padding-left: 170px;
+        width: 900px;
+        height: 300px;
+}
+
+/* ---------------TITULO DE INICIO--------------- */
+
+svg {
+    display: block;
+    font: 7.5em 'Montserrat';
+    width: 400px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+.text-copy {
+    fill: none;
+    stroke: white;
+    stroke-dasharray: 6% 29%;
+    stroke-width: 5px;
+    stroke-dashoffset: 0%;
+    animation: stroke-offset 10s infinite linear;
+}
+
+.text-copy:nth-child(1){
+	stroke: #ffffff;
+	animation-delay: -1;
+}
+
+.text-copy:nth-child(2){
+	stroke: #ffffff;
+	animation-delay: -2s;
+}
+
+.text-copy:nth-child(3){
+	stroke: #ffffff;
+	animation-delay: -3s;
+}
+
+.text-copy:nth-child(4){
+	stroke: #ffffff;
+	animation-delay: -4s;
+}
+
+.text-copy:nth-child(5){
+	stroke: #ffffff;
+	animation-delay: -5s;
+}
+
+@keyframes stroke-offset{
+	100% {stroke-dashoffset: -35%;}
+}
+
+.back-color{
+    background-color: black;
+}
+
+/* ---------------LOGO INICIO--------------- */
+.fond-logo{
+    height: 70px;
+    width: 220px;
+
+}
+
+.pad-logo{
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.pad-texto-logo{
+    padding-left: 5px;
+    padding-top: 10px;
+}

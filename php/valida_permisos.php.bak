@@ -1,0 +1,58 @@
+<?php
+	session_start();
+	echo "usuario ".$_SESSION['_user'];
+
+	if(!isset($_SESSION['_user']))
+	{
+		header("location:../index.php");
+	}
+	else
+	{
+		include("conexion.php");
+		$x_usuario  = $_SESSION['_user'];
+
+	$program_id = "";
+		
+
+		// Obtengo los Permisos del Usuario respecto al programa
+		$sql = "	SELECT * FROM adm_usuarios, adm_roles, adm_permisos, adm_programas
+					WHERE usu_id = '$x_usuario'
+					AND usu_rol = rol_id
+					AND usu_rol = per_rol
+					AND per_programa = pro_id
+					AND pro_id = $program_id
+					AND pro_estado = 'A'
+					AND usu_estado = 'A'
+					AND rol_estado = 'A'
+			";
+echo $sql;
+
+	//$result=mysqli_query($conexion, "SELECT * FROM personas ");
+	//while($row=mysqli_fetch_array($result, MYSQLI_ASSOC))
+	
+
+		$result = mysqli_query($conexion,$sql) or die(mysqli_error());
+
+		if (mysqli_num_rows($result) == 0 )
+		{
+			header('Location: mensaje.php?mensaje=Relación Usuario-Rol-Programa No Configurada&programa=menu.php&tipo=warning');
+		}
+		else
+		{
+			$row = mysqli_fetch_assoc($result);
+			$program_name= $row['pro_descripcion'];
+			$grant_a	 = $row['per_agregar'];
+			$grant_c 	 = $row['per_consultar'];
+			$grant_m	 = $row['per_modificar'];
+			$grant_e 	 = $row['per_eliminar'];
+			$grant_i 	 = $row['per_imprimir'];
+			$grant_r 	 = $row['per_ejecutar'];
+
+			if ($grant_r!="S")
+			{
+				header('Location: mensaje.php?mensaje=Programa No Autorizado a Usuario&programa=menu.php&tipo=warning');
+			}
+		}
+	}
+
+?>
