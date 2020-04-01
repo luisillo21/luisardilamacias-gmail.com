@@ -26,15 +26,16 @@
 				break;
 			default:
 		}
-	}else{
-				if((isset($_FILES['imagen']['name']) && ($_FILES['imagen']['error'] == UPLOAD_ERR_OK))) {
-					$destino_de_ruta = "./media/classroom";
-					move_uploaded_file($_FILES['imagen']['tmp_name'],$destino_de_ruta . $_FILES['imagen']['name']);
-					chmod($destino_de_ruta, 0755);
 		}else{
-			echo "el archivo nose a podido copiar a la carpeta imagenes";
+				if((isset($_FILES['imagen']['name']) && ($_FILES['imagen']['error'] == UPLOAD_ERR_OK))) {
+					$destino_de_ruta = "../media/classroom/";
+					move_uploaded_file($_FILES['imagen']['tmp_name'],$destino_de_ruta . $_FILES['imagen']['name']);
+					chmod($destino_de_ruta,0777);
+					chmod("../media/classroom/".$archivo,0777); 
+					}else{
+						echo "el archivo nose a podido copiar a la carpeta imagenes";
+					}
 		}
-	}
 
 	$imagen = $_FILES['imagen']['name'];
 	$sql = "INSERT INTO cls_classroom (nombre, descripcion,fecha_creacion,autor,estado,imagen) VALUES ('".$nombre."', '".$descripcion."', '".$fecha."', '". $usuario ."', 'A','".$imagen."')";

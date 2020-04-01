@@ -25,7 +25,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>Aula virtual | agregar usuarios</title>
+  <title>Aula virtual | tareas</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -47,7 +47,7 @@
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+  <nav class="main-header navbar navbar-expand-md navbar-dark navbar-dark">
     <div class="container">
       
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="index.php" class="nav-link bg-info">VOLVER A LA PANTALLA PRINCIPAL</a>
+            <a href="post_clasroom.php?id=<?php echo $_GET['id'];?>" class="nav-link text-light">Volver a la pantalla principal</a>
           </li>
           
         </ul>
@@ -79,7 +79,7 @@
       <div class="container">
         <div class="row mb-2 ">
           <div class="col-sm-5">
-            <h1 class="m-0 text-dark"> Aula virtual | Gestion de usuarios </small></h1>
+            <h1 class="m-0 text-dark"> Aula virtual | Tareas </small></h1>
           </div>
           <!-- /.col -->
 
@@ -96,8 +96,8 @@
             <div class="card-body pad table-responsive">
                 <table class="table table-bordered text-center">
                     <tr>
-                    <td>
-                      <button type="button" class="btn btn-block bg-gradient-success" data-toggle="modal" data-target="#modal-asignar">Asignar aula virtual</button>
+                    <td style="width: 20px;">
+                      <button type="button" class="btn btn-block bg-gradient-success" data-toggle="modal" data-target="#modal-asignar">Asignar deberes</button>
                     </td>
                     </tr>
                 </table>
@@ -105,16 +105,18 @@
 
       <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Lista de asignaciones</h3>
+              <h3 class="card-title">Lista de deberes</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
               <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Nombre de usuario</th>
-                  <th>Nombre del usuario</th>
-                  <th>Acciones</th>
+                  <th>Titulo</th>
+                  <th>Descripcion</th>
+                  <th>Fecha de entrega</th>
+                  <th></th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -124,18 +126,17 @@
                     exit();
                     }
                     $id = $_GET["id"];
-                    $consulta = "SELECT *  from  adm_usuarios u join cls_detalle_classroom c on
-                              u.usu_id = c.usuarios WHERE u.usu_estado ='A' AND c.id_cab_classroom=".$id;
+                    $consulta = "SELECT *  from  cls_cab_tareas  WHERE classroom=".$id;
+
                     if ($result= mysqli_query($conexion,$consulta)) {
                       while ($data = mysqli_fetch_assoc($result)) {
                     ?>
                     <tr>
-                      <td><?php echo ''.$data["usu_id"].''; ?></td>
-                      <td><?php echo ''.$data["usu_nombre"].''; ?></td>
+                      <td><?php echo ''.$data["titulo"].''; ?></td>
+                      <td><?php echo ''.$data["descripcion"].''; ?></td>
+                      <td><?php echo ''.$data["fecha_entrega"].''; ?></td>
                       <td>
-                        <a href="core/expulsar_usuario.php?id=<?php echo ''.$data["idcls_detalle_classroom"].'';?>&id2=<?php echo ''.$data["id_cab_classroom"].'';?>"  class="btn btn-danger text-light">
-                        Expulsar usuario
-                      </a>
+                        <a href="ver_tareas.php?id=<?php echo $_GET['id']; ?>&id_tarea=<?php echo ''.$data["idcls_cab_tareas"].''; ?>" class="btn btn-info">Ver tareas entregadas</a> 
                       </td>
                     </tr>
 
@@ -204,28 +205,32 @@
               <div class="card card-primary">
               <!-- /.card-header -->
               <!-- form start -->
-              <form class="form-horizontal" method="POST" action="core/guardar_asignacion.php" autocomplete="off">
+              <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="core/seccion_tareas/enviar_tarea.php" autocomplete="off">
                 <div class="card-body">
                   <div class="form-group">
+        
 						          <div class="form-group">
-                            <input type="text" hidden="true" name="id" value="<?php echo ''.$_GET["id"].''; ?>">
-                            <label>Seleccione los usuarios de esta aula virtual</label>
-                            <select class="select2 bg-success" multiple="multiple" name="usuarios[]" data-placeholder="Seleccione un usuario" style="width: 100%;">
-                                <?php
-                                    include('core/BDD.php');
-                                    $consulta = "SELECT * FROM adm_usuarios where usu_rol = '5'";
-                                    if ($result= mysqli_query($conexion,$consulta)) {
-                                    while ($data = mysqli_fetch_assoc($result)) {
-                                    ?>
-                                        <option value="<?php echo ''.$data["usu_id"].''; ?>"><?php echo ''.$data["usu_nombre"].''; ?></option>
-                                    <?php }
-                                        }?>
-                            </select>
-					          </div>
+                            <label>Titulo</label>
+                            <input type="text" name="titulo" id="titulo" class="form-control" required="">
+					             </div>
+                      <div class="form-group">
+                            <label>Fecha de entrega</label>
+                            <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" required="">
+                       </div>
+
+                      <div class="form-group">
+                            <label>Descripcion</label>
+                            <input type="text" name="descripcion" id="descripcion" class="form-control" required="">
+                       </div>
+
+                      <div class="form-group">
+                            <label>Imagen</label>
+                            <input type="hidden" name="MAX_TAM" value="2097152">
+                            <input type="file" class="form-control" accept="image/x-png,image/jpeg" id="imagen" name="imagen">
+                       </div>
+
 					          <div class="form-group">
-					          	<div class="col-sm-10">
 					          		<input type="hidden"  class="form-control" id="id_classroom" name="id_classroom" value="<?php echo ''.$_GET["id"].''; ?>"/>
-					          	</div>
 					          </div>
                 </div>
                 <!-- /.card-body -->

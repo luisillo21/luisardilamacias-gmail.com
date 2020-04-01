@@ -18,7 +18,7 @@
   
 ?>
 
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,18 +37,18 @@
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-dark">
     <div class="container">
       
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+      <div class="collapse navbar-collapse order-3 " id="navbarCollapse">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="../../index.php" class="nav-link bg-info">VOLVER A LA PANTALLA PRINCIPAL</a>
+            <a href="../../index.php" class="nav-link text-light">VOLVER A LA PANTALLA PRINCIPAL</a>
           </li>
           
         </ul>
@@ -100,15 +100,17 @@
                    <div class="col-lg-6">
                         <div class="card card-primary card-outline">
                             <?php if($data['imagen']){ ?>
-                            <img class="card-img-top" src="media/classroom/<?php echo ''.$data["imagen"].''; ?>" alt="media/classroom_fondo_clases.jpg">
+                            <img class="card-img-top"  src="media/classroom/<?php echo ''.$data["imagen"].''; ?>" alt="Sin foto de portada">
                             <?php } else{?>
                             <img class="card-img-top" src="media/classroom_fondo_clases.jpg">
                             <?php }?>
                             <div class="card-body">
                                 <h2 class="card-title text-dark mb-3"><?php echo ''.$data["nombre"].''; ?></h2>
                                 <p class="card-text"><?php echo ''.$data["descripcion"].''; ?></p>
-                                <a href="post_clasroom.php?id=<?php echo ''.$data["id_classroom"].''; ?>" class="btn btn-primary">Entrar al aula virtual</a>
-                                <a href="tabla_usuarios.php?id=<?php echo ''.$data["id_classroom"].''; ?>" class="btn btn-warning text-dark" >Asignar usuarios al aula virtual</a>
+                                <a href="post_clasroom.php?id=<?php echo ''.$data["id_classroom"].''; ?>" class="btn btn-primary">Entrar</a>
+                                <a href="tabla_usuarios.php?id=<?php echo ''.$data["id_classroom"].''; ?>" class="btn btn-warning text-dark" >Asignar</a>
+                                <a href="core/eliminar_classroom.php?id=<?php echo ''.$data["id_classroom"].''; ?>" class="btn btn-danger">Eliminar</a>
+                                <a href="editar_classroom_form.php?id=<?php echo ''.$data["id_classroom"].''; ?>" class="btn btn-primary">Editar</a>
                             </div>
                         </div>
                    </div>

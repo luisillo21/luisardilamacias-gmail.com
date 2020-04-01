@@ -7,33 +7,77 @@ class BDD
     private static $NAME_USER = "root";
     private static $PASS = "root";
     public $conexion;
-
-    private static function CONECTAR()
+    static public function CONECTAR()
     {
-        $this->conexion = new mysqli(self::$SERVIDOR,self::$NAME_USER,self::$PASS, self::$NAME_BASE) or
-            die(mysql_error());
-        $this->conexion->set_charset("utf8");
-        return $this->conexion;
+        $conexion = new mysqli(self::$SERVIDOR,self::$NAME_USER,self::$PASS, self::$NAME_BASE);
+        if ($conexion->connect_errno) {
+            echo "Fallo al conectar a MySQL: (" . $conexion->connect_errno . ") " . $conexion->connect_error;
+        }
+        return $conexion;
     }
-
-    private static function CONSULTAR($tabla,$campo,$where = "")
+    static public function CONSULTAR($tabla,$campo,$where = "")
     {
         $mysql = self::CONECTAR();
-        if ($tabla || $campo )
+        if (!$tabla || !$campo )
         {
             return;
         }
         $sql = "";
-        if (!$where) $where = "where $where";
-        $sql = "SELECT $campo FROM $tabla$where";
-        $res = mysqli_query($mysql,$sql);
-        return mysqli_fetch_object($res);
+        if ($where) $where = "where $where";
+
+        $sql .= "SELECT $campo FROM $tabla $where ;";
+
+        if(!$res = $mysql->query($sql))
+        {
+            echo "consulta: ".$sql." \n";
+            echo "Erro en consulta: ".$mysql->errno ." \n";
+            echo "Error: " . $mysql->error . "\n";
+            exit;
+        }else{
+            if ($res->num_rows === 0)
+            {
+                echo "consulta: ".$sql." \n";
+                return false;
+            }else{
+                $regs = $res->fetch_assoc();
+                return $regs;
+            }
+        }
     }
-    
-    private static function INSERTAR_DESDE_ARRAY($tabla,$array = array(),$w ="")
+    static public function  QUERY($read)
     {
         $mysql = self::CONECTAR();
-        if ($tabla) return;
+        if (!$read)
+        {
+            return;
+        }
+
+        if(!$res = $mysql->query($read))
+        {
+            echo "consulta: ".$read." \n";
+            echo "Erro en consulta: ".$mysql->errno ." \n";
+            echo "Error: " . $mysql->error . "\n";
+            exit;
+        }else{
+            if ($res->num_rows === 0)
+            {
+                $regs = array();
+                return $regs;
+            }else{
+                $regs = array();
+                while($row = $res->fetch_assoc())
+                {
+                    $regs[] = array_change_key_case($row, CASE_LOWER);
+                }
+                return $regs;
+            }
+        }
+    }
+
+    static public function INSERTAR_DESDE_ARRAY($tabla,$array= array(),$w ="")
+    {
+        $mysql = self::CONECTAR();
+        if (!$tabla) return;
         if (empty($array))
         {
             return;
@@ -42,7 +86,7 @@ class BDD
         $delim = "";
         foreach ($array as $k => $v)
         {
-            $k=strtoupper($k);
+            $k=strtolower($k);
             $strFlds = $strFlds . $delim . $k;
             $delim = ",";
         }
@@ -50,18 +94,26 @@ class BDD
         $delim = "";
         foreach ($array as $v)
         {
-            $strVals = $strVals . $delim . $v;
+            $strVals = $strVals. $delim . "'".$v."'";
             $delim = ",";
         }
         $q = "INSERT INTO $tabla ($strFlds) VALUES ($strVals)";
         $res = mysqli_query($mysql,$q);
         if ($res){
-            return true;
+            $id = self::CONSULTAR("usuario","max(id_usuario) as id");
+            if($id){
+                return $id['id'];
+            }else{
+                echo "fallo ";
+            }
         }else{
+            echo "Erro en consulta: ".$mysql->errno ." \n";
+            echo "Error: " . $mysql->error . "\n";
+            echo "insert $q \n";
             return false;
         }
     }
-    
+
     static public function ELIMINAR_DATOS($tabla,$w)
     {
         $mysql = self::CONECTAR();
@@ -77,25 +129,28 @@ class BDD
             return false;
         }
     }
-    
+
     static public function ACTUALIZAR_DESDE_ARRAY($tabla,$campos,$w)
     {
         $mysql = self::CONECTAR();
-        if ($tabla) return false;
-        if ($w) return false;
+        if (!$tabla) return false;
+        if (!$w) return false;
         else $w = "where $w";
         $strFlds = "";
         $delim = "";
         foreach ($campos as $k => $v) {
             $k = strtoupper($k);
+            $strFlds = $strFlds . $delim . $k . " = " ."'". $v."'" ;
             $delim = ",";
-            $strFlds = $strFlds . " SET" . $k . "=" . $v . $delim;
         }
-        $q = "UPDATE $tabla $strFlds $w";
+        $q = "UPDATE $tabla SET $strFlds $w";
         $res = mysqli_query($mysql,$q);
         if ($res){
             return true;
         }else{
+            echo "Erro en consulta: ".$mysql->errno ." \n";
+            echo "Error: " . $mysql->error . "\n";
+            echo "update $q \n";
             return false;
         }
     }

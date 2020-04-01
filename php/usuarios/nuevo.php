@@ -36,7 +36,7 @@
 				<h3 style="text-align:center">NUEVO REGISTRO</h3>
 			</div>
 			
-			<form class="form-horizontal" method="POST" action="guardar.php" autocomplete="off">
+			<form class="form-horizontal" method="POST" enctype="multipart/form-data" action="guardar.php" autocomplete="off">
 
 				 <div class="form-group">
 					<label for="nombre" class="col-sm-2 control-label">Nombre de usuario</label>
@@ -58,7 +58,17 @@
 						<input type="password" class="form-control" id="clave" name="clave" placeholder="clave" required>
 					</div>
 				</div>
+
+
 				
+				<div class="form-group">
+					 <label for="imagen" class="col-sm-2">Seleccione una imagen de perfil</label>
+					 	<div class="col-sm-10">
+					 		<input type="hidden" name="MAX_TAM" value="2097152">
+                    	    <input type="file" class="form-control" name="imagen" id="imagen"  accept="image/x-png,image/jpeg"  >
+					 	</div>
+                </div>	 
+
 				<div class="form-group">
 					<label for="estado_civil" class="col-sm-2 control-label">Tipo de usuario</label>
 					<div class="col-sm-10">
